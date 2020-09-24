@@ -3,7 +3,7 @@
 
 - 新手入门
 
-  - [第一章 Hello World - 开始前的准备](ch1.md)
+  - [第一章 Hello World](ch1.md)
   - [第二章 自定义方块和物品](ch2.md)
   - [第三章 操纵世界](ch3.md)
   - [第四章 回调函数](ch4.md)
