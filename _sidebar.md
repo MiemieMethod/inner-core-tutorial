@@ -1,34 +1,30 @@
 <!-- docs/_sidebar.md -->
-- [序](ch0.md)
+- [第零章 序](ch0.md)
 
-- 开始前的准备
+- 新手入门
 
-  - [Hello World](ch1.md)
-  
-- Getting started
-  
-  - [Hello World](ch1.md)
-$  - [Custom navbar](custom-navbar.md)
-$  - [Cover page](cover.md)
-$
-$- Customization
-$
-$  - [Configuration](configuration.md)
-$  - [Themes](themes.md)
-$  - [List of Plugins](plugins.md)
-$  - [Write a Plugin](write-a-plugin.md)
-$  - [Markdown configuration](markdown.md)
-$  - [Language highlighting](language-highlight.md)
+  - [第一章 Hello World - 开始前的准备](ch1.md)
+  - [第二章 自定义方块和物品](ch2.md)
+  - [第三章 操纵世界](ch3.md)
+  - [第四章 回调函数](ch4.md)
+  - [第五章 控制实体和玩家](ch5.md)
 
-$- Guide
+- Customization
 
-$  - [Deploy](deploy.md)
-$  - [Helpers](helpers.md)
-$  - [Vue compatibility](vue.md)
-$  - [CDN](cdn.md)
-$  - [Offline Mode(PWA)](pwa.md)
-$  - [Server-Side Rendering(SSR)](ssr.md)
-$  - [Embed Files](embed-files.md)
+  - [第六章 库和模组浏览器](ch6.md)
+  - [第七章 自定义实体](ch7.md)
+  - [第八章 方块和物品模型](ch8.md)
+  - [第九章 粒子效果](ch9.md)
+  - [第十章 文件交互](ch10.md)
 
-$- [Awesome docsify](awesome.md)
-$- [Changelog](changelog.md)
+- 模组进阶
+
+  - [第十一章 模组高阶方法](ch11.md)
+  - [第十二章 方块实体和液体](ch120.md)
+  - [第十三章 动画](ch13.md)
+  - [第十四章 自定义UI](ch14.md)
+  - [第十五章 自定义维度和生物群系](ch15.md)
+  - [第十六章 与原版游戏嵌合](ch16.md)
+
+- [第十七章 原生常量列表](ch17.md)
+- [第十八章 跋](ch18.md)
