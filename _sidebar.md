@@ -1,8 +1,12 @@
 <!-- docs/_sidebar.md -->
 - [序](ch0.md)
 
-- Getting started
+- 开始前的准备
 
+  - [Hello World](ch1.md)
+  
+- Getting started
+  
   - [Hello World](ch1.md)
 $  - [Custom navbar](custom-navbar.md)
 $  - [Cover page](cover.md)
