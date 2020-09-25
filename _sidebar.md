@@ -36,7 +36,7 @@
   - [库一 ItemType - 物品类型库](lib1.md)
   - [库二 EnergyLib - 能量库](lib2.md)
   - [库三 BlockModel - 方块模型库](lib3.md)
-  - [库三 StrAPI - 多方块结构库](lib4.md)
+  - [库四 StrAPI - 多方块结构库](lib4.md)
 
 - [第十七章 原生常量列表](ch17.md)
 - [第十八章 跋](ch18.md)
