@@ -12,7 +12,7 @@
 - Customization
 
   - [第六章 库和模组浏览器](ch6.md)
-  - [第七章 自定义实体](ch7.md)
+  - [第七章 自定义实体](ch7.md)1
   - [第八章 方块和物品模型](ch8.md)
   - [第九章 粒子效果](ch9.md)
   - [第十章 文件交互](ch10.md)
@@ -34,7 +34,7 @@
 - 库的文档
 
   - [库一 ItemType - 物品类型库](lib1.md)
-  - [库二 EnergyLib - 能量库](lib2.md)
+  - [库二 EnergyNet - 能量网库](lib2.md)
   - [库三 BlockModel - 方块模型库](lib3.md)
   - [库四 StrAPI - 多方块结构库](lib4.md)
 
