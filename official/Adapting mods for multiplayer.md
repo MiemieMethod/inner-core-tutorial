@@ -1,6 +1,7 @@
 # Adaptation of mods for network play
 
 ## Declaration
+
 To declare a mod as supporting the game in multiplayer, in the `launcher.js` launch script, before calling `Launch(...)`, you need to call the `ConfigureMultiplayer(configuration)` method. When calling this method, you can specify the name and version parameters, which will be used to identify the mod in the network game. If any of these parameters is not specified, then it will be taken from `mod.info`. In addition, if the `isClientOnly: true` parameter is present, the mod will be declared as purely client-side, client-side mods should not affect the world and will not be taken into account when mods are synchronized when connected(examples: MiniMap, Recipe Viewer, WAILA).
 
 ```js
@@ -12,6 +13,7 @@ ConfigureMultiplayer({
 ```
 
 ## General concepts
+
 In order to work correctly in a network game, the mod code must be divided into client and server parts, which do not interact with each other in any way, except for network packets and events of network entities. This means that the client side of the mod cannot use variables, functions, etc. server side and vice versa.
 
 The server side should be responsible for all the logic and work with the world, while the client side is responsible for the visual part based on data from the server and sending custom actions to the server.
@@ -21,6 +23,7 @@ However, many standard objects such as Tile Entities, containers, armor, etc. al
 If your world is loaded, the server and the client connected to it are launched on the same device. When connecting to the world, a client is launched, connected to the server running on the host.
 
 ## Network packet transmission and processing
+
 The basic network functionality is based on the transfer of packets - named data, from clients to the server and vice versa. To accept packets with a specific name for a server or client, you can register an event that will be triggered every time a packet with the corresponding name arrives.
 
 ```js
@@ -39,7 +42,9 @@ function sendMessageToAll(sender, text) {
     });
 }
 ```
+
 Similarly, you can send packets from the client to the server.
+
 ```js
 // event the server receives the testMod.clientMessage package from the client
 Network.addServerPacket("testMod.clientMessage", function(client, data)) {
@@ -73,6 +78,7 @@ Item.registerUseFunctionForID(280, function(coords, item, block, player) {
 ```
 
 ## Convert block and item IDs
+
 The numeric IDs of the same blocks and items will most likely be different on the client and on the server. Inner Core automatically syncs IDs so that the same item will have different IDs on different devices. However, if they are transmitted as numbers using packets, they will be different and will have to be converted manually.
 
 Since there are many clients, and there is only one server, the conversion occurs on the client side, for this there are the functions `Network.serverToLocalId(id)` and `Network.localToServerId(id)`, converting the server ID to the client ID and vice versa.
@@ -100,6 +106,7 @@ Callback.addCallback("ItemUse", function(coords, item, block, isExternal, player
 In order to test this example in practice, you need two devices, because a pair of client and server that run on the same device will have the same id. To force different ids on two devices, you can try changing the innercore / mods / .staticid file
 
 ## Tile Entity adaptation
+
 The main logic of Tile Entity runs on the server side. However, you can declare a separate prototype for the client. According to this prototype, an instance will be created for clients who have this Tile Entity nearby, have events of appearance, tick and destruction, which allows you to add a visual component.
 
 Since the old container, which was used by Tile Entity earlier, does not support multiplayer, in order for Tile Entity to support network play, it needs to be transferred to a new container type - ItemContainer. The new container type is compatible with old saves.
@@ -129,7 +136,7 @@ init: function() {
 // Network methods
 // this.sendPacket("eventName", data) - Sends a packet to all client instances of this Tile Entity
 },
-    
+
     // this event is called on the server side and returns the name of the interface to open on click
 getScreenName: function(player, coords) {
         return "someName";
@@ -199,6 +206,7 @@ eventName: function(eventData, connectedClient) {
 }
 }
 ```
+
 Let's look at a few examples, starting with the simplest. In the examples, the interface window declaration will be missing, since no changes are required in this scope, the variable containing it will be named `guiExample`.
 
 An example of the simplest Tile Entity with an interface and basic container logic.
@@ -206,7 +214,7 @@ An example of the simplest Tile Entity with an interface and basic container log
 ```js
 {
     useNetworkItemContainer: true, // use a network container
-    
+
     getScreenName: function(player, coords) {
         // we only have one version of the interface, let's call it "main"
         return "main";
@@ -218,7 +226,7 @@ An example of the simplest Tile Entity with an interface and basic container log
         // in addition, it is possible without checking the name:
         return guiExample;
     },
-    
+
     tick: function() {
         // in the server tick, we will perform the basic logic on the container:
         if(World.getThreadTime()% 20 == 0) {
@@ -254,7 +262,7 @@ Now let's look at using the Tile Entity network events. The following example de
             }
         }
     }
-    
+
     tick: function() {
         ...
         if(slot.id == 264) {
@@ -268,6 +276,7 @@ Now let's look at using the Tile Entity network events. The following example de
 ```
 
 ## Player Tick
+
 Since many operations are required to be performed for each player separately, an additional `ServerPlayerTick` event has been introduced. This event is called on the server side every tick for every player. The following is an example of adding an event:
 
 ```js
@@ -290,6 +299,7 @@ Callback.addCallback("LocalTick", function() {
 ```
 
 ## Armor
+
 Since the old methods of registering armor events were not suitable for multiplayer, new registration functions have been added, which are listed below.
 
 ```js
