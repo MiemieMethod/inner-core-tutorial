@@ -6,12 +6,12 @@
 
 模组文件夹
     │  build.config
-    │  config.info.json
-    │  config.json
-    │  mod.info
-    │  mod_icon.png
-    │
-    └─.dex
+​    │  config.info.json
+​    │  config.json
+​    │  mod.info
+​    │  mod_icon.png
+​    │
+​    └─.dex
 
 以上五个文件和.dex文件夹是由IC指定的，不可自定义名称，其中除build.config之外其他的均非必须（.dex文件夹和config.json文件会自动生成，其余为可选文件）
 
