@@ -5,12 +5,19 @@
 在IC中，模组是以一个文件夹的形式放在`mods`文件夹里的，其常见结构如下：
 
 模组文件夹
+
     │  build.config
+
 ​    │  config.info.json
+
 ​    │  config.json
+
 ​    │  mod.info
+
 ​    │  mod_icon.png
+
 ​    │
+
 ​    └─.dex
 
 以上五个文件和.dex文件夹是由IC指定的，不可自定义名称，其中除build.config之外其他的均非必须（.dex文件夹和config.json文件会自动生成，其余为可选文件）
