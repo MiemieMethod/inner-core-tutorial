@@ -311,10 +311,10 @@ First of all, we are faced with this object in the Tile Entity, each server inst
 
 Some events are passed a `BlockSource` object. These are the events in which it cannot be obtained in any other way, in the rest they can be obtained from the player, entity or dimension id.
 
-- `Block.registerPopResourcesFunction` - the event being registered receives the `BlockSource` object with 3 parameters
-- `Block.setRandomTickCallback` - the event being registered receives the `BlockSource` object with 6 parameters
-- `Block.registerNeighbourChangeFunction` - the event being registered receives the `BlockSource` object with 4 parameters
-- `World.registerBlockChangeCallback` - the event being registered receives the `BlockSource` object with 4 parameters
+- `Block.registerPopResourcesFunction` - the event being registered receives the `BlockSource` object as the 3rd parameter
+- `Block.setRandomTickCallback` - the event being registered receives the `BlockSource` object as the 6th parameter
+- `Block.registerNeighbourChangeFunction` - the event being registered receives the `BlockSource` object as the 4th parameter
+- `World.registerBlockChangeCallback` - the event being registered receives the `BlockSource` object as the 4th parameter
 
 ## Working with SyncedNetworkData in Tile Entity
 
@@ -338,7 +338,7 @@ Both the server and client Tile Entity instances have a `networkData` field that
 
 ### Developments
 
-You can add an event to the `SyncedNetworkData` object that catches changes in any data, this event can be set both on the server side(in the `init` event of the server Tile Entity instance), and on the client side(in the `load` event of the client Tile Entity instance ).
+You can add an event to the `SyncedNetworkData` object that catches changes in any data, this event can be set both on the server side (in the `init` event of the server Tile Entity instance), and on the client side (in the `load` event of the client Tile Entity instance).
 
 ```js
 this.networkData.addOnDataChangedListener(function(networkData, isExternalChange) {
