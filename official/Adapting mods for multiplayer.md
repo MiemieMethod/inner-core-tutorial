@@ -245,7 +245,7 @@ An example of the simplest Tile Entity with an interface and basic container log
 }
 ```
 
-Now let's look at using the Tile Entity network events. The following example demonstrates the use of a client prototype and network events to create particle animations and is a continuation of the past(only the places to be shown will be shown).
+Now let's look at using the Tile Entity network events. The following example demonstrates the use of a client prototype and network events to create particle animations and is a continuation of the previous one (only the places to be shown will be shown).
 
 ```js
 {
@@ -253,9 +253,9 @@ Now let's look at using the Tile Entity network events. The following example de
     client: {
         // add a client prototype that will be responsible for animations
         events: {
-            // event that receives the animateParticles package
+            // event that receives the animateParticles packet
             animateParticles: function(packetData) {
-                // create fire particles packetData.power
+                // create fire particles in the amount of  packetData.power
                 for(var i = 0; i <packetData.power; i ++) {
                     Particles.addParticle(7, this.x + .5, this.y + .5, this.z + .5, Math.random() - .5, Math.random() - .5, Math.random() - .50);
                 }
@@ -277,7 +277,7 @@ Now let's look at using the Tile Entity network events. The following example de
 
 ## Working with the world and BlockSource
 
-Since in a network game(and in fact, in some cases in a single-player game), it is required to simultaneously access several dimensions at the same time, instead of working with the world through the `World` module comes the `BlockSource` object, which allows you to access blocks and mobs of a specific dimension.
+Since in a network game(and in fact, in some cases in a single-player game), it is required to simultaneously access several dimensions at the same time, instead of working with the world through the `World` module, it comes the `BlockSource` object, which allows you to access blocks and mobs of a specific dimension.
 
 > *IMPORTANT!* Working through the `World` module anywhere other than world generation events will most likely lead to incorrect behavior if the players are in different dimensions. During generation, methods from the `World` and `GenerationUtils` modules always work in the correct dimension.
 
@@ -287,7 +287,7 @@ Since in a network game(and in fact, in some cases in a single-player game), it 
 - `int getBlockId(x, y, z)` - gets block id by coordinates
 - `int getBlockData(x, y, z)` - gets block method data by coordinates
 - `void setBlock(x, y, z, id, data)` - sets the block to coordinates
-- `NativeTileEntity getBlockEntity(x, y, z)` - returns the interface to the vanilla Tile Entity(chest, stove, etc.)
+- `NativeTileEntity getBlockEntity(x, y, z)` - returns the interface to the vanilla Tile Entity (chest, furnance, etc.)
 - `int getBiome(x, z)` - returns the id of the biome by coordinates
 - `void setBiome(x, z, id)` - sets the id of the biome by coordinates
 - `float getBiomeTemperatureAt(x, y, z)` - returns the biome temperature by coordinates
@@ -296,7 +296,7 @@ Since in a network game(and in fact, in some cases in a single-player game), it 
 - `boolean canSeeSky(x, y, z)` - returns whether the sky is visible from a given point
 - `int getGrassColor(x, z)` - returns the color of the grass
 - `long spawnDroppedItem(x, y, z, id, count, data, extra)` - creates a dropped item and returns the id of the entity
-- `long[] fetchEntititesInAABB(x1, y1, z1, x2, y2, z2, type, blacklist)` - returns a list of entity ids in a given box that correspond to the given type type, if the `blacklist` value is `false` and all, except for entities not of this type, if blacklist is true
+- `long[] fetchEntititesInAABB(x1, y1, z1, x2, y2, z2, type, blacklist)` - returns a list of entity ids in a given box that correspond to the given type `type` if the `blacklist` value is `false` and all, except for entities not of this type, if `blacklist` is `true`
 
 ### Methods for random access to BlockSource
 
