@@ -59,7 +59,7 @@ function sendMessageFromClient(message) {
 }
 ```
 
-In the case of the last example, we can see that the client parameter is received in the event of receiving a packet by the server, which is the server interface of the client from which this packet was received. It can be used to get the player entity (`client.getPlayerUid()`). In addition, it allows you to send packets to a specific client, and not all at once. To get a client, knowing the identity of the player, use `Network.getClientForPlayer(playerUid)`.
+In the case of the last example, we can see that the client parameter is received in the event of receiving a packet by the server, which is the server interface of the client from which this packet was received. It can be used to get the player entity(`client.getPlayerUid()`). In addition, it allows you to send packets to a specific client, and not all at once. To get a client, knowing the identity of the player, use `Network.getClientForPlayer(playerUid)`.
 
 ```js
 // register a use function for the stick
@@ -275,6 +275,154 @@ Now let's look at using the Tile Entity network events. The following example de
 }
 ```
 
+## Working with the world and BlockSource
+
+Since in a network game(and in fact, in some cases in a single-player game), it is required to simultaneously access several dimensions at the same time, instead of working with the world through the `World` module comes the `BlockSource` object, which allows you to access blocks and mobs of a specific dimension.
+
+> *IMPORTANT!* Working through the `World` module anywhere other than world generation events will most likely lead to incorrect behavior if the players are in different dimensions. During generation, methods from the `World` and `GenerationUtils` modules always work in the correct dimension.
+
+### Basic Methods
+
+- `int getDimension()` - returns the id of the dimension to which this object belongs
+- `int getBlockId(x, y, z)` - gets block id by coordinates
+- `int getBlockData(x, y, z)` - gets block method data by coordinates
+- `void setBlock(x, y, z, id, data)` - sets the block to coordinates
+- `NativeTileEntity getBlockEntity(x, y, z)` - returns the interface to the vanilla Tile Entity(chest, stove, etc.)
+- `int getBiome(x, z)` - returns the id of the biome by coordinates
+- `void setBiome(x, z, id)` - sets the id of the biome by coordinates
+- `float getBiomeTemperatureAt(x, y, z)` - returns the biome temperature by coordinates
+- `boolean isChunkLoaded(chunkX, chunkZ)` - returns whether the chunk is loaded by coordinates
+- `int getChunkState(chunkX, chunkZ)` - returns the chunk loading state by the chunk coordinates
+- `boolean canSeeSky(x, y, z)` - returns whether the sky is visible from a given point
+- `int getGrassColor(x, z)` - returns the color of the grass
+- `long spawnDroppedItem(x, y, z, id, count, data, extra)` - creates a dropped item and returns the id of the entity
+- `long[] fetchEntititesInAABB(x1, y1, z1, x2, y2, z2, type, blacklist)` - returns a list of entity ids in a given box that correspond to the given type type, if the `blacklist` value is `false` and all, except for entities not of this type, if blacklist is true
+
+### Methods for random access to BlockSource
+
+- `BlockSource.getDefaultForDimension(dimension)` - returns the interface to this default dimension. Returns `null` if the given dimension is not loaded and this interface has not been created yet.
+- `BlockSource.getDefaultForActor(entityUid)` - returns the interface to the dimension in which the entity is located, returns `null` if the entity does not exist or this dimension has not been loaded and the interface has not been created.
+
+### BlockSource and Tile Entity
+
+First of all, we are faced with this object in the Tile Entity, each server instance has a `blockSource` field that contains an interface to the dimension in which it is located. *IMPORTANT!* All work with the world in this Tile Entity must be done through its `BlockSource`.
+
+### BlockSource and Events
+
+Some events are passed a `BlockSource` object. These are the events in which it cannot be obtained in any other way, in the rest they can be obtained from the player, entity or dimension id.
+
+- `Block.registerPopResourcesFunction` - the event being registered receives the `BlockSource` object with 3 parameters
+- `Block.setRandomTickCallback` - the event being registered receives the `BlockSource` object with 6 parameters
+- `Block.registerNeighbourChangeFunction` - the event being registered receives the `BlockSource` object with 4 parameters
+- `World.registerBlockChangeCallback` - the event being registered receives the `BlockSource` object with 4 parameters
+
+## Working with SyncedNetworkData in Tile Entity
+
+Both the server and client Tile Entity instances have a `networkData` field that represents data synchronized between the server and all clients and allows them to be caught and validated.
+
+### Communication Methods
+
+- `int getInt(key[, fallback])` - gets the value by key
+- `long getLong(key[, fallback])` - gets the value by key
+- `float getFloat(key[, fallback])` - gets the value by key
+- `double getDouble(key[, fallback])` - gets the value by key
+- `String getString(key[, fallback])` - gets the value by key
+- `boolean getBoolean(key[, fallback])` - gets the value by key
+- `void putInt(key, value)` - sets the value by key
+- `void putLong(key, value)` - sets the value by key
+- `void putFloat(key, value)` - sets the value by key
+- `void putDouble(key, value)` - sets the value by key
+- `void putString(key, value)` - sets the value by key
+- `void putBoolean(key, value)` - sets the value by key
+- `void sendChanges()` - send changed data
+
+### Developments
+
+You can add an event to the `SyncedNetworkData` object that catches changes in any data, this event can be set both on the server side(in the `init` event of the server Tile Entity instance), and on the client side(in the `load` event of the client Tile Entity instance ).
+
+```js
+this.networkData.addOnDataChangedListener(function(networkData, isExternalChange) {
+    // networkData is the SyncedNetworkData object that changed
+    // isExternalChange - false if the change was made by calling put from this object, true if it came over the network from another attached data object
+});
+```
+
+In addition, validators can be added to the server object `SyncedNetworkData` - methods that check the change that came from the client and can confirm it, change or deny it. This is for security reasons so that clients cannot send incorrect data to the server using modified mods.
+
+You can install the validator in the `init` event of the server Tile Entity instance:
+
+```js
+this.networkData.addVerifier(key, function(key, newValue) {
+    // the validator returns the value that will be set to the data
+    // just use return newValue to skip the value;
+    // use return null to undo the change;
+    // you can return any other value and it will be set
+});
+```
+
+If a field in the server synchronized data needs to be blocked from being changed by clients, you can do it as follows:
+
+```js
+this.networkData.addVerifier(key, function(key, newValue) {return null;});
+```
+
+### Example
+
+Consider a Tile Entity as an example, which displays a model of an item above itself that lies in its slot.
+
+```js
+{
+    // use the network container implementation
+    useNetworkItemContainer: true,
+
+    client: {
+        updateModel: function() {
+            // update the model using networkData
+            // don't forget about converting item ids from server to client
+            var id = Network.serverToLocalId(this.networkData.getInt("itemId"));
+            var data = this.networkData.getInt("itemData");
+            this.model.describeItem({
+                id: id, count: 1, data: data, size: 1
+            });
+        },
+
+        load: function() {
+            // create a model when creating a client instance
+            this.model = new Animation.Item(this.x + .5, this.y + 1.5, this.z + .5);
+            this.updateModel();
+            this.model.load();
+
+            // add a data change event
+            var that = this;
+            this.networkData.addOnDataChangedListener(function(data, isExternal) {
+                // update the model when the data changes
+                that.updateModel();
+            });
+        },
+
+        // destroy the model when the instance is destroyed
+        unload: function() {
+            this.model.destroy();
+        }
+    },
+
+    tick: function() {
+        // update the data every 10 ticks so as not to overload
+        if(World.getThreadTime()% 10 == 0) {
+            // get the slot
+            var slot = this.container.getSlot("someSlot");
+            // transfer data via networkData
+            this.networkData.putInt("itemId", slot.id);
+            this.networkData.putInt("itemData", slot.data);
+            // send changes to clients
+            this.networkData.sendChanges();
+        }
+    }
+
+    // methods for opening the interface are present, but are not important for the example
+}
+```
+
 ## Player Tick
 
 Since many operations are required to be performed for each player separately, an additional `ServerPlayerTick` event has been introduced. This event is called on the server side every tick for every player. The following is an example of adding an event:
@@ -297,6 +445,52 @@ Callback.addCallback("LocalTick", function() {
     // local player can be obtained via Player.get()
 });
 ```
+
+## Player interface
+
+The server side needs to handle different players, so the `Player` module is no longer relevant in a network game. It is replaced by the `PlayerActor` object, which allows you to create a temporary player interface.
+
+> *IMPORTANT!* The `PlayerActor` object is temporary and valid for 1 server tick, after that, if the player disconnects, using it may cause a crash. Therefore, every tick you need to create a new object. Besides
+
+### Example
+
+```js
+Callback.addCallback("ServerPlayerTick", function(playerUid, isPlayerDead) {
+    // every tick we create a new interface for subsequent use
+    var player = new PlayerActor(playerUid);
+});
+```
+
+### Basic Methods
+
+- `int getDimension()` - returns the id of the dimension in which the player is located
+- `int getGameMode()` - returns the player's game mode
+- `void addItemToInventory(id, count, data, extra, dropRemainings)` - adds an item to the inventory; if `dropRemainings` is `true`, the excess will be dropped as a drop next to the player
+- `ItemStack getInventorySlot(slot)` - returns the contents of the inventory slot
+- `void setInventorySlot(slot, id, count, data, extra)` - sets the contents of the inventory slot
+- `ItemStack getArmor(slot)` - returns the contents of the armor slot
+- `void setArmor(slot, id, count, data, extra)` - sets the contents of the inventory slot
+- `void setRespawnCoords(x, y, z)` - sets the coordinates of the spawn
+- `void spawnExpOrbs(x, y, z, value)` - spawn experience on coordinates
+- `boolean isValid()` - is it a valid entity
+
+### Property Getters / Setters
+
+- `int getSelectedSlot()`
+- `void setSelectedSlot(slot)`
+- `void addExperience(amount)`
+- `float getExperience()`
+- `void setExperience(value)`
+- `int getLevel()`
+- `void setLevel(level)`
+- `float getExhaustion()`
+- `void setExhaustion(value)`
+- `float getHunger()`
+- `void setHunger(value)`
+- `float getSaturation()`
+- `void setSaturation(value)`
+- `int getScore()`
+- `void setScore(value)`
 
 ## Armor
 
