@@ -277,7 +277,7 @@ Now let's look at using the Tile Entity network events. The following example de
 
 ## Working with the world and BlockSource
 
-Since in a network game(and in fact, in some cases in a single-player game), it is required to simultaneously access several dimensions at the same time, instead of working with the world through the `World` module, it comes the `BlockSource` object, which allows you to access blocks and mobs of a specific dimension.
+Since in a network game (and in fact, in some cases in a single-player game), it is required to simultaneously access several dimensions at the same time, instead of working with the world through the `World` module，it comes `BlockSource` - a region object that allows access to blocks and mobs of a specific dimension.
 
 > *IMPORTANT!* Working through the `World` module anywhere other than world generation events will most likely lead to incorrect behavior if the players are in different dimensions. During generation, methods from the `World` and `GenerationUtils` modules always work in the correct dimension.
 
@@ -291,12 +291,20 @@ Since in a network game(and in fact, in some cases in a single-player game), it 
 - `int getBiome(x, z)` - returns the id of the biome by coordinates
 - `void setBiome(x, z, id)` - sets the id of the biome by coordinates
 - `float getBiomeTemperatureAt(x, y, z)` - returns the biome temperature by coordinates
-- `boolean isChunkLoaded(chunkX, chunkZ)` - returns whether the chunk is loaded by coordinates
+- `boolean isChunkLoaded(chunkX, chunkZ)` - returns whether the chunk is loaded by the chunk coordinates
+- `boolean isChunkLoadedAt(x, z)` - returns whether the chunk is loaded by the block coordinates
 - `int getChunkState(chunkX, chunkZ)` - returns the chunk loading state by the chunk coordinates
+- `int getChunkStateAt(x, z)` - returns the chunk loading state by block coordinates
 - `boolean canSeeSky(x, y, z)` - returns whether the sky is visible from a given point
 - `int getGrassColor(x, z)` - returns the color of the grass
-- `long spawnDroppedItem(x, y, z, id, count, data, extra)` - creates a dropped item and returns the id of the entity
-- `long[] fetchEntititesInAABB(x1, y1, z1, x2, y2, z2, type, blacklist)` - returns a list of entity ids in a given box that correspond to the given type `type` if the `blacklist` value is `false` and all, except for entities not of this type, if `blacklist` is `true`
+- `void destroyBlock(x, y, z[, drop])` - destroys the block at coordinates, if `drop` is `true`, then the block drops resources as if destroyed by a non-player
+- `void explode(x, y, z, power[, fire])` - produces an explosion at coordinates
+- `long spawnEntity(x, y, z, int type)` - creates an entity by numeric type and returns
+- `long spawnEntity(x, y, z, string type)` - creates an entity by string type and returns it, syntax options: `type_name`, `namespace:type_name`, `namespace:type_name:init_data`
+- `long spawnEntity(x, y, z, namespace, typeName, initData)` - creates an entity by namespace, type name and initialization data and returns it
+- `long spawnDroppedItem(x, y, z, id, count, data[, extra)` - creates a dropped item and returns the id of the entity
+- `void spawnExpOrbs(x, y, z, expAmount)` - creates an experience orb on coordinates, with a total value of `expAmount`
+- `long[] listEntititesInAABB(x1, y1, z1, x2, y2, z2[, type[, blacklist]])` - returns a list of entity ids in a given box that correspond to the given type `type` if the `blacklist` value is `false`, and all, except for entities not of this type, if `blacklist` is `true`
 
 ### Methods for random access to BlockSource
 
@@ -307,14 +315,42 @@ Since in a network game(and in fact, in some cases in a single-player game), it 
 
 First of all, we are faced with this object in the Tile Entity, each server instance has a `blockSource` field that contains an interface to the dimension in which it is located. *IMPORTANT!* All work with the world in this Tile Entity must be done through its `BlockSource`.
 
-### BlockSource and Events
+## Changed Multiplayer Events
 
-Some events are passed a `BlockSource` object. These are the events in which it cannot be obtained in any other way, in the rest they can be obtained from the player, entity or dimension id.
+Many events now take the id of the player's entity performing the action, or a `BlockSource` object that provides access to the dimension where the event occurs.
 
-- `Block.registerPopResourcesFunction` - the event being registered receives the `BlockSource` object as the 3rd parameter
-- `Block.setRandomTickCallback` - the event being registered receives the `BlockSource` object as the 6th parameter
-- `Block.registerNeighbourChangeFunction` - the event being registered receives the `BlockSource` object as the 4th parameter
-- `World.registerBlockChangeCallback` - the event being registered receives the `BlockSource` object as the 4th parameter
+### Logged events
+
+- `Item.registerUseFunction` - the registered event takes the player who uses an item as the 4th parameter
+- `Item.registerNoTargetUseFunction` - the registered event takes the player who uses an item as the 2nd parameter
+- `Item.registerUsingReleasedFunction` - the registered event takes the player who uses an item as the 3rd parameter
+- `Item.registerUsingCompleteFunction` - the registered event takes the player who uses an item as the 2nd parameter
+- `Item.registerDispenseFunction` - the registered event takes the player using the item as the 3rd parameter
+- `Block.registerDropFunction` - the event being registered takes the `BlockSource` object as the 7th parameter
+- `Block.registerPlaceFunction` - the event being registered takes a player as the 4th parameter and a `BlockSource` object as the 5th parameter
+- `Block.registerPopResourcesFunction` - the event being registered gets a `BlockSource` object as the 3rd parameter
+- `Block.setRandomTickCallback` - the event being registered gets a `BlockSource` object as the 6th parameter
+- `Block.registerNeighbourChangeFunction` - the event being registered gets a `BlockSource` object as the 4th parameter
+- `World.registerBlockChangeCallback` - the event being registered gets a `BlockSource` object as the 4th parameter
+- the `click` event of TileEntity takes a player as the 5th parameter
+
+### Events added via `Callback.addCallback`
+
+- `ItemUse` - the event takes the player who uses an item as the 5th parameter
+- `DestroyBlock` - the event takes the player who brokes the block as the 3rd parameter
+- `FoodEaten` - the event takes a player as the 3rd parameter
+- `ExpAdd` - the event takes a player as the 2nd parameter
+- `ExpLevelAdd` - the event takes a player as the 2nd parameter
+- `PlayerAttack` - the event takes a player as the 1st parameter
+- `EntityInteract` - the event takes a player as the 2nd parameter
+- `ItemUseNoTarget` - the event takes a player as the 2nd parameter
+- `ItemUsingReleased` - the event takes a player as the 3rd parameter
+- `ItemUsingComplete` - the event takes a player as the 2nd parameter
+- `ExpLevelAdd` - the event takes a player as the 2nd parameter
+- `RedstoneSignal` - the event takes a `BlockSource` object as the 4th parameter
+- `PopBlockResources` - event accepts a `BlockSource` object as the 5th parameter
+- `BlockEventNeighbourChange` - the event takes a `BlockSource` object as the 4th parameter
+- `ItemDispensed` - the event takes a `BlockSource` object as the 3rd parameter
 
 ## Working with SyncedNetworkData in Tile Entity
 
@@ -423,7 +459,7 @@ Consider a Tile Entity as an example, which displays a model of an item above it
 }
 ```
 
-## Player Tick
+## Player tick and other events
 
 Since many operations are required to be performed for each player separately, an additional `ServerPlayerTick` event has been introduced. This event is called on the server side every tick for every player. The following is an example of adding an event:
 
@@ -443,6 +479,16 @@ In addition, there is a client tick event, which is called every tick of the cli
 ```js
 Callback.addCallback("LocalTick", function() {
     // local player can be obtained via Player.get()
+});
+```
+
+The `DimensionLoaded` and `DimensionUnloaded` events are deprecated because not suitable for multiplayer games, they are replaced by the server event `PlayerChangedDimension`, which is called when the player is loaded in a dimension or when switching between dimensions.
+
+```js
+Callback.addCallback("PlayerChangedDimension", function (playerUid, currentId, lastId) {
+     // playerUid - the player who changed the dimension
+     // currentId - the dimension the player is currently in
+     // lastId - the dimension the player was in, if this event was triggered when the player was loaded, then currentId == lastId
 });
 ```
 
