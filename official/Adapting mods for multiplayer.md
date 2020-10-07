@@ -337,7 +337,7 @@ Many events now take the id of the player's entity performing the action, or a `
 ### Events added via `Callback.addCallback`
 
 - `ItemUse` - the event takes the player who uses an item as the 5th parameter
-- `DestroyBlock` - the event takes the player who brokes the block as the 3rd parameter
+- `DestroyBlock` - the event takes the player who breaks a block as the 3rd parameter
 - `FoodEaten` - the event takes a player as the 3rd parameter
 - `ExpAdd` - the event takes a player as the 2nd parameter
 - `ExpLevelAdd` - the event takes a player as the 2nd parameter
