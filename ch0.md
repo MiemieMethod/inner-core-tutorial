@@ -16,7 +16,7 @@ Inner Core 是适用于 **Minecraft 基岩版（Minecraft Bedrock Edition）**�
 
 同过本教程的学习，开发者们可以了解到 Inner Core 中绝大部分基础知识。配合算法和库的使用，及对开源项目的借鉴，读者将会编写出非凡的成果。
 
-感谢 Github 提供的 Github Page 服务。感谢“麦穗Sama”“Pv糊”[有待添加]等人参与本教程的编辑。感谢[有待添加]对本教程进行了详尽的校阅。
+感谢 Github 提供的 Github Page 服务。感谢[麦穗Sama](https://github.com/Tenautumn)、[Pv糊](https://github.com/pvhu2002)、[微风糖糖](https://github.com/weifeng233)[有待添加]等人参与本教程的编辑。感谢[有待添加]对本教程进行了详尽的校阅。
 
 <div style="text-align: right">方法放寒假</div>
 
