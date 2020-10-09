@@ -22,7 +22,7 @@
 这是main.js中的代码，由一行输出语句和一段创建物品ID并新建物品（详见[第二章](ch2.md)），你可根据Inner Core Dev Wiki来自行做一些修改。
 
 ```javascript
-alert("Hello, Inner Core!")
+alert("Hello, Inner Core!");
 
 //添加一个新物品
 IDRegistry.genItemID("test_item");
