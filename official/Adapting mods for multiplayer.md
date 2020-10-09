@@ -8,7 +8,7 @@ To declare a mod as supporting the game in multiplayer, you need to call the `Co
 ConfigureMultiplayer({
     name: "readable unique name", // unique network name of the mod
     version: "version", // version
-    isClientOnly: true / false // if true, the mod is considered purely client-side
+    isClientOnly: true/false // if true, the mod is considered purely client-side
 });
 ```
 
