@@ -1,6 +1,6 @@
 # Chapter 0 序
 
-Inner Core 是适用于 **Minecraft 基岩版（Minecraft Bedrock Edition）**的一款模组加载器。它的作者 [Zheka Smirnov](https://vk.com/zheka_smirnov) 在 PC 版的模组加载器 [Forge](http://files.minecraftforge.net/) 的启发下制作了它的前身 [Core Engine](https://vk.com/core_engine?w=wall-129680450_2)。虽然 Core Engine 只是当时著名的 Minecraft 携带版启动器 [BlockLauncher](https://play.google.com/store/apps/details?id=net.zhuoweizhang.mcpelauncher) 的一个 ModPE，但是它强大的功能足以使其化身为一个聚合各种模组的模组加载器。之后 Zheka 独立编写了 [Inner Core](https://play.google.com/store/apps/details?id=com.zhekasmirnov.innercore)，使 Core Engine 脱离了 BlockLauncher 并成为 Inner Core 中众多 API 中的一个。之后，Inner Core 便成为了一个吸引广大手机 MC 玩家和模组开发者的功能强大的模组加载器。
+Inner Core 是适用于**Minecraft 基岩版（Minecraft Bedrock Edition）**的一款模组加载器。它的作者 [Zheka Smirnov](https://vk.com/zheka_smirnov) 在 PC 版的模组加载器 [Forge](http://files.minecraftforge.net/) 的启发下制作了它的前身 [Core Engine](https://vk.com/core_engine?w=wall-129680450_2)。虽然 Core Engine 只是当时著名的 Minecraft 携带版启动器 [BlockLauncher](https://play.google.com/store/apps/details?id=net.zhuoweizhang.mcpelauncher) 的一个 ModPE，但是它强大的功能足以使其化身为一个聚合各种模组的模组加载器。之后 Zheka 独立编写了 [Inner Core](https://play.google.com/store/apps/details?id=com.zhekasmirnov.innercore)，使 Core Engine 脱离了 BlockLauncher 并成为 Inner Core 中众多 API 中的一个。之后，Inner Core 便成为了一个吸引广大手机 MC 玩家和模组开发者的功能强大的模组加载器。
 
 2020年1月1日，Zheka 在 [Inner Core 的 VK 社区](https://vk.com/core_engine)中发布了[新应用 Horizon 的预告](https://vk.com/core_engine?w=wall-129680450_16038)。2月23日，第一个 Inner Core 2.0 内测包被发布到了 GitLab 上。Inner Core 不再进行单独更新，反而以作为一个实例被整合到了这个实例型启动器 [Horizon](https://play.google.com/store/apps/details?id=com.zheka.horizon) 中。新版的 Inner Core 2.0 在 Core Engine API 的基础上加入了更多的方法。更多的功能得以实现了。
 
@@ -16,7 +16,7 @@ Inner Core 是适用于 **Minecraft 基岩版（Minecraft Bedrock Edition）**�
 
 同过本教程的学习，开发者们可以了解到 Inner Core 中绝大部分基础知识。配合算法和库的使用，及对开源项目的借鉴，读者将会编写出非凡的成果。
 
-感谢 Github 提供的 Github Page 服务。感谢[麦穗Sama](https://github.com/Tenautumn)、[Pv糊](https://github.com/pvhu2002)、[微风糖糖](https://github.com/weifeng233)[有待添加]等人参与本教程的编辑。感谢[有待添加]对本教程进行了详尽的校阅。
+感谢 Github 提供的 Github Page 服务。感谢[方法放寒假](https://github.com/MiemieMethod)、[麦穗Sama](https://github.com/Tenautumn)、[Pv糊](https://github.com/pvhu2002)、[微风糖糖](https://github.com/weifeng233)等人参与本教程的编辑。感谢[方法放寒假](https://github.com/MiemieMethod)对本教程进行了详尽的校阅。
 
 <div style="text-align: right">方法放寒假</div>
 

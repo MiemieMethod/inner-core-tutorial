@@ -86,7 +86,7 @@ Since there are many clients, and there is only one server, the conversion occur
 Consider an example to demonstrate this:
 
 ```js
-// a packet that comes to the client from the server with information about the use of the item(for example, we pass only id and data)
+// a packet that comes to the client from the server with information about the use of the item (for example, we pass only id and data)
 Network.addClientPacket("testMod.useItemInfo", function() {
     // display information: first the id that the server sent us, then the id that this item has on the client, to confirm that this is the same item on the client, we get its name by the client id
     var localId = Network.serverToLocalId(packetData.id);
