@@ -14,9 +14,9 @@ Inner Core 是适用于**Minecraft 基岩版（Minecraft Bedrock Edition）**的
 
 第四部分是一个算法分享锦集。在这里我们会介绍各种现成的算法。大家可以直接借鉴这些代码来丰富自己的模组。第五部分是各种实用和常用库的文档，列在此处供大家参阅。
 
-同过本教程的学习，开发者们可以了解到 Inner Core 中绝大部分基础知识。配合算法和库的使用，及对开源项目的借鉴，读者将会编写出非凡的成果。
+通过本教程的学习，开发者们可以了解到 Inner Core 中绝大部分基础知识。配合算法和库的使用，及对开源项目的借鉴，读者将会编写出非凡的成果。
 
-感谢 Github 提供的 Github Page 服务。感谢[方法放寒假](https://github.com/MiemieMethod)、[麦穗Sama](https://github.com/Tenautumn)、[Pv糊](https://github.com/pvhu2002)、[微风糖糖](https://github.com/weifeng233)等人参与本教程的编辑。感谢[方法放寒假](https://github.com/MiemieMethod)对本教程进行了详尽的校阅。
+感谢 Github 提供的 Github Page 服务。感谢[方法放寒假](https://github.com/MiemieMethod)、[麦穗Sama](https://github.com/Tenautumn)、[Pv糊](https://github.com/pvhu2002)、[微风糖糖](https://github.com/weifeng233)等人参与本教程的编辑。感谢[方法放寒假](https://github.com/MiemieMethod)、[Lakejason0](https://github.com/lakejason0)对本教程进行了详尽的校阅。
 
 <div style="text-align: right">方法放寒假</div>
 

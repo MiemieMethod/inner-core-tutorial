@@ -3,7 +3,7 @@
 - Minecraft
 - Inner Core
 - Horizon
-- Mod 模组
+- Mod / Modification 模组
 - Block （物品型）方块
 - Tile （实例型）方块
 - Item 物品
@@ -35,17 +35,23 @@
 - Map
   - 贴图 \[着色系统\]
   - 映射
+- Atlas 图集
+- Flipbook 翻书
 - Mesh 网格
 - Bone 骨骼
 - Skeleton 骨架
 - Grid 方格
+- Checkerboard 棋盘格
 - Particle 粒子
 - Particle Emitter 粒子发生器
 - Status Effect / Effect 状态效果
 - UI
 - Container 容器
 - Window 窗口
-- Interface 界面
+- Screen 屏幕
+- Interface
+  - 界面
+  - 接口
 - Liquid 液体
 - Fluid 流体
 - Animation 动画
@@ -109,23 +115,47 @@
 - Farm 耕种
 - Craft 合成
 - Enchant 附魔
+- Disenchant 袪魔
+- Enchantment 魔咒
 - Smelt
   - 烧炼（方块）
   - 烧制（石材）
   - 冶炼（矿物）
   - 烹饪（食物）
 - Trade 交易
-- Snake 潜行
+- Sneak 潜行
 - Sprint 疾跑
+- Ride 骑乘
+- Swim 游泳
 - Loot Table 战利品表
 - Raid 袭击
 - Chunk 区块
 - Section 区段 \[世界生成器\]
 - Subchunk 子区块
 - Opacity 不透明度
+- Opaque 不透明的
+- Transparency 透明度
+- Transparent 透明的
+- Translucency 半透明度
+- Translucent 半透明的
 - Spawn 生成
 - Respawn 重生
 - Summon 召唤
 - Stack 堆叠
 - Release 发布
 - Variant 变种
+- Health 生命值
+- Hunger 饥饿值
+- Saturation 饱和度
+- Exhaustion 疲劳度
+- Mob 生物
+- Skin 皮肤
+- Drop
+  - 掉落
+  - 掉落物
+- Offhand 副手
+- Collision Box 碰撞箱
+- Hitbox 击中箱
+- Shape 形状
+- Condition 条件 \[ICRender\]
+- Group 组 \[ICRender\]
