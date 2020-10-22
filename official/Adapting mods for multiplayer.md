@@ -496,7 +496,7 @@ Callback.addCallback("PlayerChangedDimension", function (playerUid, currentId, l
 
 The server side needs to handle different players, so the `Player` module is no longer relevant in a network game. It is replaced by the `PlayerActor` object, which allows you to create a temporary player interface.
 
-> *IMPORTANT!* The `PlayerActor` object is temporary and valid for 1 server tick, after that, if the player disconnects, using it may cause a crash. Therefore, every tick you need to create a new object. Besides
+> *IMPORTANT!* The `PlayerActor` object is temporary and valid for 1 server tick, after that, if the player disconnects, using it may cause a crash. Therefore, additionally, every tick you need to create a new object.
 
 ### Example
 
