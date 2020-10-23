@@ -198,7 +198,7 @@ The following is the documentation for the Tile Entity network prototype, the ev
     },
 
     containerEvents: {
-        // container events on the server side, in this case `this` is the server instance that received the package
+        // container events on the server side, in this case `this` is the server instance that received the packet
 
         eventName: function(eventData, connectedClient) {
             // method available only here: this.container.sendResponseEvent("eventName", someData)
