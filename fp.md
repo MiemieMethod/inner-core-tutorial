@@ -109,7 +109,9 @@
 - Dig 挖掘
 - Punch 击打 \[方块\] \[实体\]
 - Mine 开采
-- Destroy 摧毁
+- Destroy
+  - （玩家）摧毁
+  - （游戏）销毁
 - Breed 繁殖
 - Brew 酿造
 - Farm 耕种
@@ -159,3 +161,6 @@
 - Shape 形状
 - Condition 条件 \[ICRender\]
 - Group 组 \[ICRender\]
+- Tick
+  - n. 刻
+  - v. 更新
