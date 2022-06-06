@@ -15,7 +15,7 @@
 
 当然，除了以上的几个文件，在模组里还有许多其他文件夹和文件存在，它们是由build.config指定的库文件夹，launcher执行文件，mod执行文件，资源文件夹，java文件夹和native文件夹等，开发者可以自行修改。
 
-这里提供了一个简单的[模板示例](https://github.com/MiemieMethod/inner-core-tutorial/raw/master/files/misc/template.icmod)，指定了res文件夹作为资源文件夹，main.js作为mod执行文件以及launcher.js作为launcher.js执行文件。
+这里提供了一个简单的[模板示例](https://github.com/MiemieMethod/inner-core-tutorial/raw/master/files/mods/template.icmod)，指定了res文件夹作为资源文件夹，main.js作为mod执行文件以及launcher.js作为launcher.js执行文件。
 
 这是main.js中的代码，由一行输出语句和一段创建物品ID并新建物品（详见[第二章](ch2.md)），你可以参阅[Core Engine v2.1 API](https://docs.mineprogramming.org/api/)的内容自行尝试修改。
 
